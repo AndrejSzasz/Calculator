@@ -24,6 +24,9 @@ export class CalculateService {
         break;
       case Operator.EQUALS:
         break;
+      case Operator.CLEAR:
+        this.clearLastNumber();
+        break;
       default:
         this.updateNumber(char);
     }
@@ -58,6 +61,14 @@ export class CalculateService {
     if (typeof lastOperand === 'number') {
       this.operands.push(-1 * lastOperand);  // -0 was not specified in AC, requres architectural change
     } else if (lastOperand !== undefined) { // empty array would pop undefined
+      this.operands.push(lastOperand);
+    }
+    this.emitNext();
+  }
+
+  private clearLastNumber(): void {
+    const lastOperand = this.operands.pop();
+    if (typeof lastOperand !== 'number' && lastOperand !== undefined) {
       this.operands.push(lastOperand);
     }
     this.emitNext();

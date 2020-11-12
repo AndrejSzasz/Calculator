@@ -3,4 +3,6 @@ export enum Operator {
     MINUS = '-',
     EQUALS = '=',
     PLUSMINUS = '+/-',
+    CLEAR = 'C',
+    ALLCLEAR = 'AC',
 }

@@ -52,6 +52,14 @@ describe('CalculateService', () => {
     service.press(Operator.PLUSMINUS);
   });
 
+  it('should be able to clear the last entered value', (done) => {
+    service.press('1');
+    service.press(Operator.PLUS);
+    service.press('2');
+    testResult([1, Operator.PLUS], done);
+    service.press(Operator.CLEAR);
+  });
+
 
   function testResult(expected: Array<number | Operator>, done: DoneFn): void {
     service.resultStream.subscribe((array) => {
