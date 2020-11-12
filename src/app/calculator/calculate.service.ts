@@ -30,8 +30,10 @@ export class CalculateService {
     const lastOperand = this.operands.pop();
     if (typeof lastOperand === 'number') {
       this.operands.push(lastOperand);
+    };
+    if (lastOperand !== undefined) { // empty array would pop undefined
+      this.operands.push(operator);
     }
-    this.operands.push(operator);
     this.emitNext();
   }
 

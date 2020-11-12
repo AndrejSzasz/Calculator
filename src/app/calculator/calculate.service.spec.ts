@@ -38,6 +38,13 @@ describe('CalculateService', () => {
     service.press(Operator.MINUS);
   });
 
+  it('should not begin with an operator', (done) => {
+    service.press(Operator.MINUS); // begin with operator
+    service.press('1');
+    testResult([1, Operator.PLUS], done);
+    service.press(Operator.PLUS);
+  });
+
 
   function testResult(expected: Array<number | Operator>, done: DoneFn): void {
     service.resultStream.subscribe((array) => {
