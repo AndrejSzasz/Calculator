@@ -68,6 +68,14 @@ describe('CalculateService', () => {
     service.press(Operator.ALLCLEAR);
   });
 
+  it('should calculate the result', (done) => {
+    service.press('1');
+    service.press(Operator.PLUS);
+    service.press('2');
+    testResult([1, Operator.PLUS, 2, Operator.EQUALS, 3], done);
+    service.press(Operator.EQUALS);
+  });
+
 
   function testResult(expected: Array<number | Operator>, done: DoneFn): void {
     service.resultStream.subscribe((array) => {

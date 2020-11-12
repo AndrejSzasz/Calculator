@@ -17,12 +17,11 @@ export class CalculateService {
     switch (char) {
       case Operator.PLUS:
       case Operator.MINUS:
+        case Operator.EQUALS:
         this.updateOperator(char);
         break;
       case Operator.PLUSMINUS:
         this.negative();
-        break;
-      case Operator.EQUALS:
         break;
       case Operator.CLEAR:
         this.clearLastNumber();
@@ -42,8 +41,34 @@ export class CalculateService {
     };
     if (lastOperand !== undefined) { // empty array would pop undefined
       this.operands.push(operator);
+      if (operator === Operator.EQUALS) {
+        this.calculateResult();
+      }
     }
     this.emitNext();
+  }
+
+  private calculateResult(): void {
+    const result = this.operands.reduce((previousValue, currentValue, currentIndex, array) => {
+      if (currentIndex === 0) {
+        return (typeof currentValue === 'number') ? currentValue : 0;
+      }
+      if (typeof previousValue === 'number'
+        && typeof currentValue === 'number'
+        && currentIndex > 0) {
+        switch (array[currentIndex - 1]) {
+          case Operator.PLUS:
+            return previousValue + currentValue;
+          case Operator.MINUS:
+            return previousValue - currentValue;
+          default:
+            return 0;
+        }
+      } else {
+        return previousValue;
+      }
+    }, 0);
+    this.operands.push(result);
   }
 
   private updateNumber(char: string): void {
