@@ -27,6 +27,9 @@ export class CalculateService {
       case Operator.CLEAR:
         this.clearLastNumber();
         break;
+      case Operator.ALLCLEAR:
+        this.clearAll();
+        break;
       default:
         this.updateNumber(char);
     }
@@ -71,6 +74,11 @@ export class CalculateService {
     if (typeof lastOperand !== 'number' && lastOperand !== undefined) {
       this.operands.push(lastOperand);
     }
+    this.emitNext();
+  }
+
+  private clearAll(): void {
+    this.operands = [];
     this.emitNext();
   }
 

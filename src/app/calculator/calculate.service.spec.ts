@@ -60,6 +60,14 @@ describe('CalculateService', () => {
     service.press(Operator.CLEAR);
   });
 
+  it('should be able to clear all', (done) => {
+    service.press('1');
+    service.press(Operator.PLUS);
+    service.press('2');
+    testResult([], done);
+    service.press(Operator.ALLCLEAR);
+  });
+
 
   function testResult(expected: Array<number | Operator>, done: DoneFn): void {
     service.resultStream.subscribe((array) => {
