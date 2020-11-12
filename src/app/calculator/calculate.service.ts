@@ -9,31 +9,26 @@ export class CalculateService {
 
   private operands: Array<number | Operator> = [];
   private stream: Subject<Array<number | Operator>> = new Subject();
-  public resultStream: Observable<Array<number | Operator>>;
+  public resultStream: Observable<Array<number | Operator>> = this.stream.asObservable();
 
-  constructor() {
-    this.resultStream = this.stream.asObservable();
-  }
+  constructor() { }
 
   press(char: string): void {
-    console.log(char);
-    if (char in Operator) {
-      console.log('alma');
+    switch (char) {
+      case Operator.PLUS:
+        break;
+      default:
+        this.updateNumber(char);
     }
   }
 
-  add(param: any): void {
-
-    if (typeof param === 'number') {
-      this.operands.push(param);
-    } else if (param === '+') {
-      this.operands.push(Operator.PLUS);
-    } else if (param === '=') {
-      // this.operands.reduce((previous, current, array) => previous + current, 0);
-
+  private updateNumber(char: string): void {
+    const lastOperand = this.operands.pop();
+    if (lastOperand === undefined) {
+      this.operands.push(parseInt(char, 10));
+    } else if (typeof lastOperand === 'number') {
+      this.operands.push(parseInt(lastOperand.toString() + char, 10));
     }
-    this.stream.next(this.operands);
-
-
+    this.stream.next([...this.operands]); // destructuring was needed to emit the changed array
   }
 }
