@@ -45,6 +45,13 @@ describe('CalculateService', () => {
     service.press(Operator.PLUS);
   });
 
+  it('should be able to make the number negative', (done) => {
+    service.press('1');
+    service.press('2');
+    testResult([-12], done);
+    service.press(Operator.PLUSMINUS);
+  });
+
 
   function testResult(expected: Array<number | Operator>, done: DoneFn): void {
     service.resultStream.subscribe((array) => {

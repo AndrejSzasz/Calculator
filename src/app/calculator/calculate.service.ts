@@ -19,6 +19,9 @@ export class CalculateService {
       case Operator.MINUS:
         this.updateOperator(char);
         break;
+      case Operator.PLUSMINUS:
+        this.negative();
+        break;
       case Operator.EQUALS:
         break;
       default:
@@ -46,6 +49,16 @@ export class CalculateService {
     } else {
       this.operands.push(lastOperand);
       this.operands.push(parseInt(char, 10));
+    }
+    this.emitNext();
+  }
+
+  private negative(): void {
+    const lastOperand = this.operands.pop();
+    if (typeof lastOperand === 'number') {
+      this.operands.push(-1 * lastOperand);  // -0 was not specified in AC, requres architectural change
+    } else if (lastOperand !== undefined) { // empty array would pop undefined
+      this.operands.push(lastOperand);
     }
     this.emitNext();
   }

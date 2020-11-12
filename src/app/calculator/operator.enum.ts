@@ -1,5 +1,6 @@
 export enum Operator {
     PLUS = '+',
     MINUS = '-',
-    EQUALS = '='
+    EQUALS = '=',
+    PLUSMINUS = '+/-',
 }

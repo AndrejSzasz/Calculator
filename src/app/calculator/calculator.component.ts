@@ -12,7 +12,7 @@ export class CalculatorComponent {
   layout = [
     '1', '2', '3', Operator.PLUS,
     '4', '5', '6', Operator.MINUS,
-    '7', '8', '9', '+/-',
+    '7', '8', '9', Operator.PLUSMINUS,
     '0', 'C', 'AC', Operator.EQUALS,
   ];
 
