@@ -1,4 +1,5 @@
 import { CalculateService } from './calculate.service';
+import { Operator } from './operator.enum';
 
 describe('CalculateService', () => {
   let service: CalculateService;
@@ -12,13 +13,38 @@ describe('CalculateService', () => {
   });
 
   it('should be emitting entered numbers', (done) => {
+    testResult([1], done);
+    service.press('1'); // Subject does not store the data so need to execute after test setup
+  });
+
+  it('should be able to enter multiple numbers', (done) => {
+    service.press('1');
+    service.press('2');
+    testResult([123], done);
+    service.press('3');
+  });
+
+  it('should be able to add 2 numbers', (done) => {
+    service.press('1');
+    service.press(Operator.PLUS);
+    testResult([1, Operator.PLUS, 2], done);
+    service.press('2');
+  });
+
+  it('should let the last operator prevail', (done) => {
+    service.press('1');
+    service.press(Operator.PLUS);
+    testResult([1, Operator.MINUS], done);
+    service.press(Operator.MINUS);
+  });
+
+
+  function testResult(expected: Array<number | Operator>, done: DoneFn): void {
     service.resultStream.subscribe((array) => {
-      expect(array).toEqual([1]);
+      expect(array).toEqual(expected);
       done();
     }, (error) => {
       fail('observable errored out: ' + error);
     });
-    service.press('1'); // Subject does not store the data so need to execute after test setup
-  });
-
+  }
 });
