@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { CalculateService } from './calculate.service';
 import { Operator } from './operator.enum';
 
@@ -15,8 +18,13 @@ export class CalculatorComponent {
     '7', '8', '9', Operator.PLUSMINUS,
     '0', Operator.CLEAR, Operator.ALLCLEAR, Operator.EQUALS,
   ];
+  operations: Observable<string>
 
-  constructor(public calculate: CalculateService) { }
+  constructor(public calculate: CalculateService) {
+    this.operations = calculate.resultStream.pipe(
+      map((array: Array<number | Operator>): string => array.join(''))
+    );
+  }
 
   onPress(char: string): void {
     this.calculate.press(char);
