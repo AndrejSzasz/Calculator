@@ -1,5 +1,18 @@
 # Calculator
 
+The task is to create a completely front-end side calculator, based on the following aspects:
+
+1. Any front-end technology can be used, but Angular is preferred.
+1. The calculator shall be able to add any number of whole numbers with buttons.
+1. The entered digits and operators shall be displayed, after pressing the equals button, the result shall be displayed as well.
+1. It is important that data entry cannot be started with an operator, however, negative numners shall be allowed.
+1. Multiple operators shall not be allowed in succession, always the last operator shall be effective.
+1. There shall be a clear button that clears the last value.
+
+During the evaluation of the task, cleanness of the code and the used algorithms will be considered.
+
+---
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.7.
 
 ## Development server
